@@ -1,0 +1,26 @@
+name: Semgrep SAST
+
+on:
+  push:
+    branches:
+      - master   # لأن فرعك ليس main بل master
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Semgrep
+        run: |
+          pip install semgrep
+
+      - name: Run Semgrep SAST Scan
+        run: |
+          semgrep --config=auto .
